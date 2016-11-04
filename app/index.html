@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="us">
+
+<!-- ng-app (a custom attribute defined by Angular) receives the same name defined into app.js
+ So now, everything inside these html tags, is linked to the myApp module.-->
+<html lang="us" ng-app="myApp">
   <head>
     <title>Introduction to AngularJS</title>
     <meta charset="utf-8">
@@ -19,7 +22,7 @@
       <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"> The Local Namespace </a>
+            <a class="navbar-brand" href="/"> Modules, Apps and Controllers </a>
           </div>
 
           <ul class="nav navbar-nav navbar-right">
@@ -29,7 +32,8 @@
       </nav>
     </header>
 
-    <div class="container">
+    <!--This container is going to be controlled by 'mainController', defined in app.js-->
+    <div class="container" ng-controller="mainController">
       <div class="row">
         <div class="col-md-12">
           
@@ -42,6 +46,10 @@
 
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--Finally we are going to start working with Angular, here is being imported from a CDN
+    but the best practice is to install it witn a Package Manager, like Bower.-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="/bower_components/modernizr/modernizr.js"></script>
     
     <script src="scripts/app.js"></script>

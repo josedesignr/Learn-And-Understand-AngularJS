@@ -1,40 +1,38 @@
 
 
-/* THE LOCAL NAMESPACE */
+/* Modules, Apps and Controllers */
 
 /*
-	In the last lesson, we learned that is not correct to pollute the Global Namespace
-	Here, we are going to see how to create a Local Namespace, and define our variables inside.
+	Remember in previous lessons we were talking about not polluting the Global Namespace?
+	Well, AngularJS is gonna make sure that we don't do that.
 
+	In fact we are goint to put only one variable into the Global Namespace, and that variable is our whole app.
 */
-
-//-- A local namespace is just an object, with all our variables and functions inside. Like this:
-
-var myLocalNamespace = {
-	person: "Alvaro"
-};
-
-//-- It can be also written like this (and it's the same):
-var anotherLocalNamespace = {};
-anotherLocalNamespace.person = "Jose";
-
-
-/* Both notations are correct, and now I have two different names stored in 'person',
-	but since they are stored in different local namespaces, JavaScript will know exactly which one to call.
-	Let's print them both:
-*/
-
-console.log(myLocalNamespace.person);
-console.log(anotherLocalNamespace.person);
-
 
 /*
-Still not using AngularJS, I know...
-But this concept of Local Namespace is really important because is a fundamental part of the AngularJS structure.
+	This will be the only variable in the Global Namespace, and everything is going to be inside it.
+	This variable is equal to an angular module that receives the name of our app,
+	and a dependencies array (for now we can just leave it empty, we are going to learn about it later.)
+*/
+var app = angular.module('myApp', []);
 
-When you build an AngularJS app, you're going to see that there are certain elements and structural concepts that
-have the goal of not polluting the global namespace.
-Making sure that variables and functions that are defined don't collide and contradict variables and functions
-defined elsewhere. And that allows for a nice big ecosystem of really cool code that we don't have to worry about is
-going to interfere with the other code without realizing it.
+/* Since we have chosen "myApp" as application name, we must put the same name in the html tag, like this:
+	
+	<html ng-app="myApp"> ... </html>
+
+	This is the part that binds this JS (Model), with the HTML (View).
+	Take a look into the index.html to check this.
+*/
+
+
+//-- Now we are going to create our first controller:
+app.controller('mainController', function(){
+
+});
+/*
+ And that's it!, by doing that, we have a controller that we can asign to any part of the HTML.
+ All that we need to do is just select the part of the HTML that we want to control with this controller, and use:
+ 	<div ng-controller="mainController"> ... </div>
+
+ By just doing that, you have a controller, controlling a part of the HTML, and everything you put inside that controller can affect the view in the HTML.
 */
