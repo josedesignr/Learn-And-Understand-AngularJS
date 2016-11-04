@@ -1,32 +1,40 @@
 
 
-/* THE GLOBAL NAMESPACE */
+/* THE LOCAL NAMESPACE */
 
 /*
-	Imagine that this place (where you are reading/writing), is a space in the computer memory
-	that is at the very top of everything, the general space, the main space.
-	Everything that you define here, will be visible in any other function that you creates, because is being
-	defined outside, not enclosed in anything, just in the Global Namespace. 
+	In the last lesson, we learned that is not correct to pollute the Global Namespace
+	Here, we are going to see how to create a Local Namespace, and define our variables inside.
+
 */
 
-//-- Let's create a variable in the Global Namespace.
-var person = "Jose";
+//-- A local namespace is just an object, with all our variables and functions inside. Like this:
 
-//-- And then printing it in the console...
-console.log(person);
+var myLocalNamespace = {
+	person: "Alvaro"
+};
+
+//-- It can be also written like this (and it's the same):
+var anotherLocalNamespace = {};
+anotherLocalNamespace.person = "Jose";
+
+
+/* Both notations are correct, and now I have two different names stored in 'person',
+	but since they are stored in different local namespaces, JavaScript will know exactly which one to call.
+	Let's print them both:
+*/
+
+console.log(myLocalNamespace.person);
+console.log(anotherLocalNamespace.person);
+
 
 /*
-WARNING: This is just an example, but it is NOT correct to define variables in the Global Namespace.
+Still not using AngularJS, I know...
+But this concept of Local Namespace is really important because is a fundamental part of the AngularJS structure.
 
-...Why?
-Because in real scenarios, you are going to use different modules, frameworks, libraries, somebody else's code, etc.
-And if you have such a bad luck, and define a variable with the same name that other variable in any other place of the project,
-it is going to be overwritten, if person exists twice, only the last variable person is going to be stored.
-
-And the first one is just going to be replaced.
-This can cause serious problems and bugs, and not so easy to find.
-
-In the next lesson, we are going to learn how to avoid polluting the Global Namespace, with Local Namespaces.
-
-Go to the next tag with GIT. 
+When you build an AngularJS app, you're going to see that there are certain elements and structural concepts that
+have the goal of not polluting the global namespace.
+Making sure that variables and functions that are defined don't collide and contradict variables and functions
+defined elsewhere. And that allows for a nice big ecosystem of really cool code that we don't have to worry about is
+going to interfere with the other code without realizing it.
 */
