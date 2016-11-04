@@ -19,7 +19,7 @@
       <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"> jQuery </a>
+            <a class="navbar-brand" href="/"> Custom Attributes </a>
           </div>
 
           <ul class="nav navbar-nav navbar-right">
@@ -32,22 +32,20 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <input id="btnStep1" type="button" value="Step 1"/>
-          <input id="btnStep2" type="button" value="Step 2"/>
+          
+          <!--Just to have the concept clear before starting with AngularJS, an attribute in HTML
+          is ANYTHING that goes within the tag (except of the tag name, of course).
+          So, style, class, id, or any other one created by us, or by a framework, is an attribute.
 
-          <div id="step1" class="panel">
-            <div class="panel-body">
-              <h1> Step 1 </h1>
-              <p> This is information about step 1. </p>
-            </div>
-          </div>
+          I will use an attribute style, and create another brand new attribute in this h1.
+          PD: Using data- before an attribute name, is not needed but it a good practice for recognizing custom attributes.
+          In this case, the attribute style, since is a built-in attribute, is going to change the font size of the title, but the behavior of data-my-attribute, must be defined by me, since is an attribute created by me.
 
-          <div id="step2" class="panel">
-            <div class="panel-body">
-              <h1> Step 2 </h1>
-              <p> This is information about step 2. </p>
-            </div>
-          </div>
+          For now, it is just printing its value in the console, check the functionality in app.js
+
+          AngularJS has several attributes pre-defined and really useful (ng-repeat, ng-show, ng-if, etc), we are gonna learn about them in next lessons, but AngularJS doesn't call 'em as attributes, but DIRECTIVES. (it's the same.)
+          -->
+          <h1 style="font-size:30px" data-my-attribute="Whatever!"> Hello World! </h1>
 
         </div>
       </div>

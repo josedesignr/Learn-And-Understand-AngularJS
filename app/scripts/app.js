@@ -1,22 +1,14 @@
 
-$(document).ready(function(){
 
-	var currentStep = 0;
+/* 
+AngularJS is an MVC (Model-View-Controller) framework.
+The MODEL is here (JS), the VIEW, is basically what the user can see (HTML), and the CONTROLLER is what binds MODEL and VIEw.
 
-	$("#step1").hide();
-	$("#step2").hide();
+Whatever happens in the View, affects the Model; and viceversa.
 
-	$("#btnStep1").click(function(){
-		$("#step1").show();
-		$("#step2").hide();
 
-		currentStep = 1;
-	});
+*/
 
-	$("#btnStep2").click(function(){
-		$("#step2").show();
-		$("#step1").hide();
-
-		currentStep = 2;
-	});
-});
+//-- Using jQuery, I am printing the value stored in data-my-attribute. Still not using AngularJS.
+//-- Read the explanation of attributes in the index.html, so we can move forward.
+console.log($("h1").attr("data-my-attribute"));
