@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="us">
+  <head>
+    <title>Introduction to AngularJS</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!--load bootstrap and fontawesome via CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://use.fontawesome.com/7dfe99d5ce.js"></script>
+
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+
+  </head>
+  <body>
+
+    <header>
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="/"> jQuery </a>
+          </div>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li> <a href="#"> <i class="fa fa-home"></i> Home </a> </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <input id="btnStep1" type="button" value="Step 1"/>
+          <input id="btnStep2" type="button" value="Step 2"/>
+
+          <div id="step1" class="panel">
+            <div class="panel-body">
+              <h1> Step 1 </h1>
+              <p> This is information about step 1. </p>
+            </div>
+          </div>
+
+          <div id="step2" class="panel">
+            <div class="panel-body">
+              <h1> Step 2 </h1>
+              <p> This is information about step 2. </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/bower_components/modernizr/modernizr.js"></script>
+    
+    <script src="scripts/app.js"></script>
+  </body>
+</html>
