@@ -1,8 +1,6 @@
 <!doctype html>
 
-<!-- ng-app (a custom attribute defined by Angular) receives the same name defined into app.js
- So now, everything inside these html tags, is linked to the myApp module.-->
-<html lang="us" ng-app="myApp">
+<html lang="us">
   <head>
     <title>Introduction to AngularJS</title>
     <meta charset="utf-8">
@@ -22,7 +20,7 @@
       <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"> Modules, Apps and Controllers </a>
+            <a class="navbar-brand" href="/"> Javascript: Dependency Injection </a>
           </div>
 
           <ul class="nav navbar-nav navbar-right">
@@ -32,12 +30,10 @@
       </nav>
     </header>
 
-    <!--This container is going to be controlled by 'mainController', defined in app.js-->
-    <div class="container" ng-controller="mainController">
+    <div class="container">
       <div class="row">
         <div class="col-md-12">
           
-          <!--Read this lesson in app.js-->
           <h1 style="font-size:30px"> Hello World! </h1>
 
         </div>
