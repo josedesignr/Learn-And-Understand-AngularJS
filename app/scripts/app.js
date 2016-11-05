@@ -1,59 +1,60 @@
-/* DEPENDENCY INJECTION AND MINIFICATION */
+/* SCOPE AND INTERPOLATION */
 
 /*
-	Up to this point, we've come to understand how AngularJS does dependency injection.
-	But actually, that is one of two ways that AngularJS does dependency injection.
-	The seconnd one involves not only dependency injection, but also minification of JavaScript files.
+	Yes, I know... we still haven't written any visual AngularJS code.
 
-	But, what is minification?
-	Shrinking the size of files for faster download.
-	Every file that you find with .min, means that has been minified.
+	The visual examples are more exciting than console examples,
+	but they were fundamental in order to understand how AngularJS works.
+
+	And now that we understand what is happening in a controller,
+	and how it's connected to the view, and how services are injected.
+	Then we can really get into the fun stuff.
+
+	First... what is interpolation?
+	It's a technical term, which means "Creating a string combining strings and variables".
+
+	For example:
+	"My name is" +name (supposing that name is a variable that stores a name).
+	And the result would be "My name is Jose"
+
+	So, let's see how it works inside AngularJS
 */
 
 var app = angular.module('myApp', []);
 
 /*
-	Until now, we have been working with controllers in this way, and everything has worked just fine.
-	But, in real scenarios, it is very common to minify files.
-	So, let's suppose we have this controller, and we minify it.
+	Until now we just have a "Hello World" in the html, but let's say we want to print our name
+	instead of "World", and we want to send that name from here and not directly in the html.
+
+	How do we get the data that we define here, into the HTML?
+	If we were using jQuery, we might have to look at the h1 and adjust the h1's inner texts or use inner HTML to change that.
+
+	But remember that using AngularJS, binds our controller to the part of the HTML that we set with the ng-controller.
 */
+app.controller('mainController', ['$scope', '$timeout', function($scope, $timeout) {
 
-//-- BAD PRACTICE
-app.controller('mainController', function($scope, $log) {
-	$log.info($scope);
-});
+	/*
+		Remember that we can add variable names to our $scope, so let's add our name in there.
+		And whatever sitting in the $scope, is available into the view that is attached to the controller.
+	*/
+	//--Here our name variable is added to the $scope. Then go to the index.html and see how to show it there.
+	$scope.name = "Alvaro";
 
-/*
-	What minification does, is remove spaces and change variable names for only one character.
-	And that's where we get into a bit of trouble with AngularJS's Dependency Injection.
-	This is how we would have our controller, minified:
+	/*
+		And what if we want the name changes after some seconds? Let's do that.
+		I have injected another Angular service, which is $timeout
 
-		app.controller('mainController',function(a,b){b.info(a)});
+		What $timeout does is running a function after certain amount of time.
+	*/
 
-	It removed all the spaces, and renamed $scope for an 'a', and $log for a 'b'.
+	/* Here we are saying that after 3 seconds (3000 ms), run the internal function, 
+		which changes the name variable to "Jose". */
+	$timeout(function(){
+		$scope.name = "Jose";
+	}, 3000);
 
-	And this is a problem for AngularJS because it needs the exact names of its services in order to identify them.
-	When the minifier changed those names, it broke the Dependency Injection, because Angular doesn't recognize 'a' and 'b'
-
-	So what do we do about that?
-	Well, they already thought about that, and provided a second way to define controllers.
-
-	And, since it is supossed that we are going to minify our files in every real project.
-
-	From this point forward, we are always going to use the following method.
-*/
-
-//-- GOOD PRACTICE: 
-/* Remember last lesson we learned that a JavaScript array allows strings and functions in the same array?
-	Well, we learned that, for this.
-	Now, instead of passing directly the function to the controller,
-	we are gonna pass an array, with the names of the services as strings, and then, the function with the services injected normally.
-	IMPORTANT:
-	Keep the strings order, the same as the injected services.
-	So when it's minified, it doesn't matter if the minifier changes the services names for a and b
-	Because the strings won't be changed, and Angular is gonna recognize that the first string, corresponds to the first letter, and so on.
-*/
-
-app.controller('mainControllerWell', ['$scope', '$log', function($scope, $log) {
-	$log.info($scope);
+	/* 
+		And as soon as that value changes, it will automatically know that must update the places
+		where {{name}} is used, for the new value.
+	*/ 
 }]);

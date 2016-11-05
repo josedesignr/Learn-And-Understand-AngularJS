@@ -20,7 +20,7 @@
       <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"> Dependency Injection and Minification </a>
+            <a class="navbar-brand" href="/"> Scope and Interpolation </a>
           </div>
 
           <ul class="nav navbar-nav navbar-right">
@@ -34,7 +34,17 @@
       <div class="row">
         <div class="col-md-12">
           
-          <h1>Hello World!</h1>
+          <!--Whatever we put in 2 pair of curly braces, is read as a expresion, and if we put
+            put {{name}}, Angular is gonna go to 'mainController' and look for that variable there,
+            and when Angular finds it, will replace the {{name}} with the value of the variable.
+            PD: Notice that we don't have to put $scope.name, just name, because Angular already knows
+            that anything in {{}} belongs to the $scope. 
+          -->
+          <h1>Hello {{name}}</h1>
+
+          <!--We can also do this, and Angular will know that must join the variable value,
+          to the string "how are you?"-->
+          <h2> {{ name + ", how are you?"}}</h2>
 
         </div>
       </div>
