@@ -1,81 +1,95 @@
 
-/* JAVASCRIPT ASIDE: DEPENDENCY INJECTION */
-
-//-- Yes, everything that was done in AngularJS has been deleted again, because this is a JS Aside.
-
+/* THE SCOPE SERVICE */
 
 /*
-	This is a really important, fundamental concept,
-	and it's one of those things you are going to hear when people talk about AngularJS.
+	Scope is one of the most important concepts/functionalities within AngularJS.
+	It's a big part of the thing that binds the Model to the View, it's calle Scope,
+	and it's an object from something called the Scope Service, which is part of te core Angular modules.
 
-	You need to understand this before to move on to any other parts of AngularJS.
-
-	Dependency Injection: Giving a function an object.
-	In other words, rather than creating an object inside a function, you pass it to the function.
-
-	Let's see an example:
+	Let's see how it works
 */
 
-//-- First, we are going to define an object using a function.
-//-- Remember that everything in JavaScript is a function, even objects are functions.
-var Person = function(firstName, lastName){
 
-	/* Inside Person we are going to say that Person has firstName and lastName
-	and they are equal to what is received as argument. It's just a way of creating objects in JavaScript */
-	this.firstName = firstName;
-	this.lastName = lastName;
-}
+var app = angular.module('myApp', []);
 
-//--BAD PRACTICE: And then we are going to create a logPersn function...
-function logPerson(){
+//-- This is what we had before, but now, let's pass inside the function, an object called $scope.
+app.controller('mainController', function($scope) {
 
-	//-- And now we are going to create a new person.
-	var john = new Person('John', 'Doe');
-	console.log(john);
-}
 
-//-- And trigger the function.
-logPerson();
+	/* We have not defined $scope anywhere, we just passed it to the function.
+	   So you might be thinking that the console would not print anything, 
+	   but check what you get if you print $scope in console...
+	*/
+		console.log($scope);
+	//-- It's a really complex object, built-in by Angular, but we don't need to care about that complexity.
+	
+	//-- We just need to know that we can store our own properties, into the $scope, like this:
+	$scope.name = " Alvaro Jose";
+	$scope.role = "Web UI Developer";
 
+	//-- We can even add functions:
+	$scope.getName = function(){
+		return "Alvaro Jose";
+	};
+
+	//--Now if we print it again, we will see the same object, but now includes our 2 variables and our function in its properties.
+	console.log($scope);
+
+	/*
+	The Scope becomes the piece between the View and the Controller.
+	It means that, now, those variables and function, are also linked to the piece of HTML
+	that we selected to give the ng-controller.
+	So now, if we want to include the value stored in $scope.name, in our HTML, we can just call it. (we will see later how) 
+	*/
+});
 
 /*
- Just like it is above, the logPerson function is dependent of the variable john which is inside.
- In other words, if something is going to change about John, it has to be inside the logPerson function,
- because the john variable lives there.
- And guess what? ...THAT'S BAD!
-
- We prefer not to do that. It turns to be a code really difficult to deal with.
-
- So, instead we are going to use DEPENDENCY INJECTION!
-
- Sounds complicated but it's not...
+	Let's understand why $scope works before to move on, explained in pure JavaScript.
+	Passing things to controllers is a fundamental concept that we need to understand.
 */
 
-//--GOOD PRACTICE: Let's repeat the logPerson function, but well done this time...
+	//-- Let's create a brand new function, called searchPeople, with a bunch of parameters inside.
+	//-- This is just another way to create functions, this syntax is called "function expression". (store the function in a variable).
+	var searchPeople = function(firstName, lastName, height, age, role){
 
-//-- First thing to do is remove john from inside the logPerson function, and pass a person object as argument into the function.
-function logPersonGood( person ){
+		return 'Jane Doe';
 
-	console.log(person);
-}
+	}
+	//--And then let's log it to the console:
 
-//--Then, we are going to create the person outside the function, and pass it to the function; like this:
-var john = new Person('John', 'Doe');
+	//-- A. If I invoke the function, by adding a pair of parentheses beside the function's name...
+	console.log(searchPeople());
+	//-- I will see "Jane Doe" in console.
 
-//-- And trigger the new logPerson function...
-logPersonGood(john);
+	//-- B. If I log only searchPeople, without invoking it...
+	console.log(searchPeople);
+	//-- I will see a String with the whole function (all what is after the '=' sign), in console.
 
-/*
-The result is the same, but in the second one we are 'injecting' the object instead of creating it inside the function.
-It's pretty simple but is actually very important...
+	/*
+		Yes, you can take a function in JavaScript and convert it to a String just like that.
+		It is the same as convert it to String by yourself
 
-The new logPerson function is NOT dependent on how John is created.
-John could be created, or being got from a database, o whatever we want to do to create John,
-and the logPerson function does not care, it just need to receive a person, no matter how it was created.
+		To prove it, you can do this:
+			
+			var searchPeopleString = searchPeople.toString();
+			console.log(searchPeopleString);
+		
+		And it will print exactly the same as above.
 
-logPersonGood is no longer dependent on John variable, as the first logPerson is.
+		Why is that important?
 
-This concept is very important because AngularJS uses dependency injection,
-when it comes to its controllers and other instances.
-It's a simple concept but enforces strong and stable architecture for your web applications.
-*/
+		That means that, if you can take any function in JavaScript and get its String representation,
+		So you can pass a whole function, as an argument into another function!
+
+		Angular takes this concept to use dependency injection with its services as $scope or others.
+	*/
+
+	/*
+		Extra tip:
+		We could also have made a normal function like this:
+		
+		function searchPeople(firstName, lastName, height, age, role){
+			return 'Jane Doe';
+		}
+		...and it would be the same. Just know that you can create functions in both ways.
+	*/
