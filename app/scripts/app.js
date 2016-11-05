@@ -1,49 +1,24 @@
 
-/* GETTING OTHER SERVICES: PART 1*/
+/* GETTING OTHER SERVICES: PART 2*/
 
 /*
-	We have learned about the $scope service, but there are several others that can be used in the same way.
-	If you go to the AngularJS page, in the API section, you will see the list of services that are available for you.
+	There are other official Angular services, but not included in the angular.js file
+	This is just in order to not have a file so heavy with a lot of services that we might not use.
+	This additional services can be found also in the angularjs page, inside the angularjs version that he have chosen to work with.
 
-	Services as:
-	$scope, $animate, $http, $q, $location, $log, $timeout, and many others.
+	Some of the most important aditional services is angular-route, angular-sanitize, angular-messages, and much more. 
+
 */
 
-//-- Let's see for example, how to use the $log service.
 
-var app = angular.module('myApp', []);
+//-- Let's see for example, how to use this service as well (let's try ngMessages).
 
-//-- Notice that I injected another services ($log, $filter) as argument of the function
-app.controller('mainController', function($scope, $log, $filter) {
+//-- Step 1: We must download the aditional service, and include the script in the index.html (See there).
+//-- Step 2: Then, we must inject the ngMessages module, into the main app module, which is 'myApp'.
 
-	//-- If we print $log, we will see that it's an object with several methods. (debug, error, info, log, warn)
-	console.log($log);
+//-- The rest of the lesson is in index.html, to see how ngMessages works.
+var app = angular.module('myApp', ['ngMessages']);
 
-	//-- Now that $log has been injected, let's use it.
-	$log.log("This is a normal console.log, but using the $log service.");
-	$log.info("This is useful for logging information in console.");
-	$log.debug("This is useful for logging debugging messages in console.");
-	$log.error("This is useful for logging error messages in console.");
-	$log.warn("This is useful for logging warning messages in console.");
+app.controller('mainController', function() {
 
-	//-- Now, let's try $filter.
-
-	//-- First, I declared a variable name (stored in $scope), equal to a string.
-	$scope.name = "Jose";
-
-	/* 
-	Then, I created another variable, which equal to the same variable above,
-	but before that, is passed by an 'uppercase' filter (built-in) of the $filter service.
-	*/
-	$scope.formattedName = $filter('uppercase')($scope.name);
-
-	//--Now if we print both variables, we well see 'Jose', and 'JOSE'.
-	$log.info($scope.name);
-	$log.info($scope.formattedName);
 });
-
-/*
-	And just like that, we used three services inside our controller,
-	and we can use any other of the Angular services, just by passing the name into the controller.
-	Thanks to Dependency Injection.
-*/

@@ -20,7 +20,7 @@
       <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"> Getting Other Services: Part 1 </a>
+            <a class="navbar-brand" href="/"> Getting Other Services: Part 2 </a>
           </div>
 
           <ul class="nav navbar-nav navbar-right">
@@ -34,7 +34,22 @@
       <div class="row">
         <div class="col-md-12">
           
-          <h1 style="font-size:30px"> Hello World! </h1>
+          <form name="myForm">
+            <!--This is an input that is required and needs to be at least 5 characters longer-->
+            <input type="text" ng-model="field" name="myField" minlength="5" required />
+            
+            <!--Using the ngMessages module, we can add form validation just as easy as this-->
+            <div ng-messages="myForm.myField.$error">
+              
+              <!--Error Message when the 'required' condition is not met-->
+              <div ng-message="required" class="alert alert-warning"> You did not enter a field </div>
+
+              <!--Error Message when the 'minlength' condition is not met-->
+              <div ng-message="minlength" class="alert alert-danger">The value entered is too short</div>
+
+              <!--PD: The classes 'alert alert-danger' and 'alert alert-warning' are not part of the ngMessages module, it is just from Bootstrap to make it look nicer; you could delete them-->
+            </div>
+          </form>
 
         </div>
       </div>
@@ -45,6 +60,10 @@
 
     <!--This is Angular, here is being imported from a CDN but the best practice is to install it witn a Package Manager, like Bower.-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+
+    <!--These additional services can also be installed via Bower-->
+    <script src="https://code.angularjs.org/1.5.8/angular-messages.min.js"></script>
+
     <script src="/bower_components/modernizr/modernizr.js"></script>
     
     <script src="scripts/app.js"></script>
