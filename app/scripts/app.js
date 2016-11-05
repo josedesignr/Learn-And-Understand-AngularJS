@@ -1,95 +1,49 @@
 
-/* THE SCOPE SERVICE */
+/* GETTING OTHER SERVICES: PART 1*/
 
 /*
-	Scope is one of the most important concepts/functionalities within AngularJS.
-	It's a big part of the thing that binds the Model to the View, it's calle Scope,
-	and it's an object from something called the Scope Service, which is part of te core Angular modules.
+	We have learned about the $scope service, but there are several others that can be used in the same way.
+	If you go to the AngularJS page, in the API section, you will see the list of services that are available for you.
 
-	Let's see how it works
+	Services as:
+	$scope, $animate, $http, $q, $location, $log, $timeout, and many others.
 */
 
+//-- Let's see for example, how to use the $log service.
 
 var app = angular.module('myApp', []);
 
-//-- This is what we had before, but now, let's pass inside the function, an object called $scope.
-app.controller('mainController', function($scope) {
+//-- Notice that I injected another services ($log, $filter) as argument of the function
+app.controller('mainController', function($scope, $log, $filter) {
 
+	//-- If we print $log, we will see that it's an object with several methods. (debug, error, info, log, warn)
+	console.log($log);
 
-	/* We have not defined $scope anywhere, we just passed it to the function.
-	   So you might be thinking that the console would not print anything, 
-	   but check what you get if you print $scope in console...
+	//-- Now that $log has been injected, let's use it.
+	$log.log("This is a normal console.log, but using the $log service.");
+	$log.info("This is useful for logging information in console.");
+	$log.debug("This is useful for logging debugging messages in console.");
+	$log.error("This is useful for logging error messages in console.");
+	$log.warn("This is useful for logging warning messages in console.");
+
+	//-- Now, let's try $filter.
+
+	//-- First, I declared a variable name (stored in $scope), equal to a string.
+	$scope.name = "Jose";
+
+	/* 
+	Then, I created another variable, which equal to the same variable above,
+	but before that, is passed by an 'uppercase' filter (built-in) of the $filter service.
 	*/
-		console.log($scope);
-	//-- It's a really complex object, built-in by Angular, but we don't need to care about that complexity.
-	
-	//-- We just need to know that we can store our own properties, into the $scope, like this:
-	$scope.name = " Alvaro Jose";
-	$scope.role = "Web UI Developer";
+	$scope.formattedName = $filter('uppercase')($scope.name);
 
-	//-- We can even add functions:
-	$scope.getName = function(){
-		return "Alvaro Jose";
-	};
-
-	//--Now if we print it again, we will see the same object, but now includes our 2 variables and our function in its properties.
-	console.log($scope);
-
-	/*
-	The Scope becomes the piece between the View and the Controller.
-	It means that, now, those variables and function, are also linked to the piece of HTML
-	that we selected to give the ng-controller.
-	So now, if we want to include the value stored in $scope.name, in our HTML, we can just call it. (we will see later how) 
-	*/
+	//--Now if we print both variables, we well see 'Jose', and 'JOSE'.
+	$log.info($scope.name);
+	$log.info($scope.formattedName);
 });
 
 /*
-	Let's understand why $scope works before to move on, explained in pure JavaScript.
-	Passing things to controllers is a fundamental concept that we need to understand.
+	And just like that, we used three services inside our controller,
+	and we can use any other of the Angular services, just by passing the name into the controller.
+	Thanks to Dependency Injection.
 */
-
-	//-- Let's create a brand new function, called searchPeople, with a bunch of parameters inside.
-	//-- This is just another way to create functions, this syntax is called "function expression". (store the function in a variable).
-	var searchPeople = function(firstName, lastName, height, age, role){
-
-		return 'Jane Doe';
-
-	}
-	//--And then let's log it to the console:
-
-	//-- A. If I invoke the function, by adding a pair of parentheses beside the function's name...
-	console.log(searchPeople());
-	//-- I will see "Jane Doe" in console.
-
-	//-- B. If I log only searchPeople, without invoking it...
-	console.log(searchPeople);
-	//-- I will see a String with the whole function (all what is after the '=' sign), in console.
-
-	/*
-		Yes, you can take a function in JavaScript and convert it to a String just like that.
-		It is the same as convert it to String by yourself
-
-		To prove it, you can do this:
-			
-			var searchPeopleString = searchPeople.toString();
-			console.log(searchPeopleString);
-		
-		And it will print exactly the same as above.
-
-		Why is that important?
-
-		That means that, if you can take any function in JavaScript and get its String representation,
-		So you can pass a whole function, as an argument into another function!
-
-		Angular takes this concept to use dependency injection with its services as $scope or others.
-	*/
-
-	/*
-		Extra tip:
-		We could also have made a normal function like this:
-		
-		function searchPeople(firstName, lastName, height, age, role){
-			return 'Jane Doe';
-		}
-		...and it would be the same. Just know that you can create functions in both ways.
-	*/
