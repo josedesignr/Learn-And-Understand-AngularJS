@@ -1,24 +1,45 @@
-
-/* GETTING OTHER SERVICES: PART 2*/
-
-/*
-	There are other official Angular services, but not included in the angular.js file
-	This is just in order to not have a file so heavy with a lot of services that we might not use.
-	This additional services can be found also in the angularjs page, inside the angularjs version that he have chosen to work with.
-
-	Some of the most important aditional services is angular-route, angular-sanitize, angular-messages, and much more. 
-
-*/
-
-
-//-- Let's see for example, how to use this service as well (let's try ngMessages).
-
-//-- Step 1: We must download the aditional service, and include the script in the index.html (See there).
-//-- Step 2: Then, we must inject the ngMessages module, into the main app module, which is 'myApp'.
-
-//-- The rest of the lesson is in index.html, to see how ngMessages works.
 var app = angular.module('myApp', ['ngMessages']);
 
 app.controller('mainController', function() {
 
 });
+
+//--Ignore the Angular code above for now, this lesson will be a pure JavaScript one.
+
+/* JAVASCRIPT ASIDE: ARRAYS AND FUNCTIONS */
+
+/*
+	We are going to talk, very briefly, about JavaScript arrays and how they work with functions.
+
+	This lesson will be short but it's important before the next lesson.
+	Something which is particular in JavaScript, compared with other languages
+	is that you can have different types of elements in the same array, numbers, strings, and even functions:
+	
+*/
+var things = [
+				1, 
+				'2', 
+				function(){
+					alert("I am a function inside an array!");
+				}
+			];
+
+//-- So now, if we print 'things' in console, we are going to see all the content, no matter if they are different types of data.
+console.log(things);
+
+//--And, we can also access and trigger the function inside the array, like this:
+things[2]();
+//-- The [2] is accessing the array, in the third position (2 is the third position because 0 also counts)
+//-- The () trigger the function, so we should see an alert.
+
+/*
+	So, here is the basic idea, a fundamental concept.
+	I can include different types of things in an array, and I can include functions in that array.
+
+	Remember this fundamental concept, because is very important to understanding the next lesson.
+*/
+
+
+
+
+
