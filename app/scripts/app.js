@@ -1,60 +1,45 @@
-/* SCOPE AND INTERPOLATION */
+/* NG-MODEL AND TWO-WAY DATA BINDING */
 
 /*
-	Yes, I know... we still haven't written any visual AngularJS code.
+	It's time to get a handle on one of, if not the most important topic
+	when it comes to learning and understanding AngularJS: Directives, and Two-Way Data Binding.
 
-	The visual examples are more exciting than console examples,
-	but they were fundamental in order to understand how AngularJS works.
+	If you have heard or read anything abot AngularJS, you probably have heard the term "directive",
+	It's used all the time, and it sounds really complex, but it really isn't as complicated as it sounds.
 
-	And now that we understand what is happening in a controller,
-	and how it's connected to the view, and how services are injected.
-	Then we can really get into the fun stuff.
+	IMPORTANT CONCEPT:
+	Directive: An instruction to AngularJS to manipulate a piece of the DOM.
+	(this could be "add a class", 'hide this', 'create this', etc...)
+	There are a lot of directives that AngularJS has created for us, we already used two of them:
+	ng-controller and ng-app, but there are much more.
+	* ng-class: to add or remove a class from an element depending on some condition.
+	* ng-show: shows an element if a condition is met.
+	* ng-hide: hides an element if a condition is met.
+	* ng-if: removes an element from the DOM is a condition is not met.
+	* ng-repeat: iterates across an array or object (like a for), so it creates as much elements as an array has, but in the HTML you just need to create one pair of tags.
+	* ng-model: binds data from here to the html, and any change made here or in the html, changes also in the other side
 
-	First... what is interpolation?
-	It's a technical term, which means "Creating a string combining strings and variables".
+	There are much more directives, but ng-model is one of the most powerful ones, and that is the one we are going to use in this lesson.
 
-	For example:
-	"My name is" +name (supposing that name is a variable that stores a name).
-	And the result would be "My name is Jose"
+	If you have done a little bit of JavaScript or jQuery you may have manually changed what was going on in the DOM,
+	(Document Object Model) that is a representation in memory of the HTML.
 
-	So, let's see how it works inside AngularJS
+	AngularJS prefers that we use directives, because it makes it much more powerful and flexible.
 */
 
 var app = angular.module('myApp', []);
 
-/*
-	Until now we just have a "Hello World" in the html, but let's say we want to print our name
-	instead of "World", and we want to send that name from here and not directly in the html.
 
-	How do we get the data that we define here, into the HTML?
-	If we were using jQuery, we might have to look at the h1 and adjust the h1's inner texts or use inner HTML to change that.
+app.controller('mainController', ['$scope', '$filter', function($scope, $filter) {
 
-	But remember that using AngularJS, binds our controller to the part of the HTML that we set with the ng-controller.
-*/
-app.controller('mainController', ['$scope', '$timeout', function($scope, $timeout) {
+	//--First we create a property in the $scope, which starts empty.
+	$scope.account = "";
 
-	/*
-		Remember that we can add variable names to our $scope, so let's add our name in there.
-		And whatever sitting in the $scope, is available into the view that is attached to the controller.
-	*/
-	//--Here our name variable is added to the $scope. Then go to the index.html and see how to show it there.
-	$scope.name = "Alvaro";
+	//--This is not necessary, it's just to show how we can also call functions in a interpolation in the HTML. (See there)
+	$scope.accountInLowercase = function(){
 
-	/*
-		And what if we want the name changes after some seconds? Let's do that.
-		I have injected another Angular service, which is $timeout
+		//--Here we are passing whatever value of $scope.account, and converting it to lowercase.
+		return $filter('lowercase')($scope.account);
+	};
 
-		What $timeout does is running a function after certain amount of time.
-	*/
-
-	/* Here we are saying that after 3 seconds (3000 ms), run the internal function, 
-		which changes the name variable to "Jose". */
-	$timeout(function(){
-		$scope.name = "Jose";
-	}, 3000);
-
-	/* 
-		And as soon as that value changes, it will automatically know that must update the places
-		where {{name}} is used, for the new value.
-	*/ 
 }]);
