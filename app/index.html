@@ -20,7 +20,7 @@
       <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"> ng-model And Two-Way Data Binding </a>
+            <a class="navbar-brand" href="/"> JavaScript Aside: The Event Loop</a>
           </div>
 
           <ul class="nav navbar-nav navbar-right">
@@ -30,30 +30,10 @@
       </nav>
     </header>
 
-    <div class="container">
-      <div ng-controller="mainController">
-        <div>
-          
-          <label> What is your Twitter account? </label>
-          
-          <!--
-          ng-model is a built-in directive that binds an element here, with a variable in the controller, in this case, the account variable.
-          So, everything that we modify in this input, is going to modify the variable value.
-          And also, if we modify the variable value, it is going to show that here.
-          That is Two-Way Data Binding.
-          And, if that variable is used somewhere else, it also is going to change, in real time.
-          -->
-          <input type="text" ng-model="account"/>
-
-          <hr/>
-
-          <!-- Here we are using interpolation, so if we type anything in the input above; it is going
-          to modify the account variable in the controller, and automatically is going to change here. -->
-          <h1> twitter.com/{{account}} </h1>
-
-          <!--This h2 is just to show that we can also trigger functions from interpolation-->
-          <h2> Account in lowercase: {{ accountInLowercase() }} </h2>
-
+    <div class="container" ng-controller="mainController">
+      <div class="row">
+        <div class="col-md-12">
+          <input type="text" id="name"/>
         </div>
       </div>
     </div>
