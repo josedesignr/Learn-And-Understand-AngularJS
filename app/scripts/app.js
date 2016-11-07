@@ -32,6 +32,16 @@ app.controller('mainController', ['$scope', function($scope) {
 		{ rulename: "Must be unique" },
 		{ rulename: "Must be fancy" },
 		{ rulename: "Any other rule" }
-	]
+	];
+
+	//--This function has been created to test common directives related with events. Go to the index.html to see them.
+	$scope.myFunction = function(){
+		alert("You have triggered the function!");
+	};
 
 }]);
+
+/*
+	PD: There are much more built-in directives (ng-keyup, ng-dbclick, ng-focus, and so on.
+	You can visit angularjs.org/api/ng/directive and check them all.
+*/

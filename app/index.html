@@ -88,13 +88,53 @@
           <!--
             BUILT-IN DIRECTIVE: ng-repeat: I can iterate over an array, and create a list of <li>
             by only putting one <li> here, all of them will be created by the repeat.
+            ng-repeat receives a name (usually the singular word of the array name) and an array name.
+            For example, if our array name in the JavaScript is shoes, we would put:
+            ng-repeat="shoe in shoes", it could also be "a in shoes", but it's easier to understand in the first way, because is one, of all the array items.
+            After that, we can just put by interpolation the value that we want.
           -->
           <ul>
             <li ng-repeat="rule in rules">{{rule.rulename}}</li>
           </ul>
 
+          <!--
+            BUILT-IN DIRECTIVE: ng-click: Triggers a function defined by us in the controller, as
+            soon as the element is clicked.
+          -->
+          <input type="button" value="Click me!" ng-click="myFunction()"/>
+
+          <!--
+            BUILT-IN DIRECTIVE: ng-mouseover: Triggers a function defined by us in the controller, as
+            soon as we pass the mouse over the element.
+          -->
+          <h2 ng-mouseover="myFunction()" > Put the mouse over here </h2>
+
+          <!--
+            BUILT-IN DIRECTIVE: ng-keydown: Triggers a function defined by us in the controller, as
+            soon as the value in the element, changes.
+          -->
+          <input type="text" placeholder="ng-keydown test" ng-keydown="myFunction()" />
+
+          <!--
+            BUILT-IN DIRECTIVE: ng-keypress: Triggers a function defined by us in the controller, as
+            soon as we press a key in the input that contains the ng-keypress. 
+          -->
+          <input type="text" placeholder="ng-keypress test" ng-keypress="myFunction()"/>
+
+          <!--
+            BUILT-IN DIRECTIVE: ng-change: Triggers a function defined by us in the controller, as
+            soon as the value of the element with ng-change, changes.
+            (ng-change receives a model, to compare if there are changes.)
+          -->
+          <input type="text" placeholder="ng-change test" ng-model="account" ng-change="myFunction()"/>
+
           <hr/>
-          <h1>twitter.com/{{account}}</h1>
+
+          <!--
+            BUILT-IN DIRECTIVE: ng-cloak: Sometimes, if you have a slow internet connection or a slow computer, you may see the interpolation expressions (in this case {{account}} ), instead of the value stored in $scope.account.
+            To avoid that, AngularJS had introduced ng-cloak, so you wont see that interpolation but only the correct values when they are ready. 
+          -->
+          <h1 ng-cloak > twitter.com/{{account}} </h1>
         </div>
       </div>
     </div>
