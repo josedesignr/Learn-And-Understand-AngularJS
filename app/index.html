@@ -20,7 +20,7 @@
       <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"> The XMLHTTPRequest Object and $http </a>
+            <a class="navbar-brand" href="/"> Single Page Apps and the Hash </a>
           </div>
 
           <ul class="nav navbar-nav navbar-right">
@@ -31,24 +31,50 @@
     </header>
 
     <div class="container">
+      <div class="row">
+        <div class="col-md-12">
 
-      <!--
-      Even if both controllers have the same variable: 'name', Angular is smart enough
-      to know that they belongs to different controllers.
-      So, it look for 'name' in mainController, and also look for 'name' in secondController
-      and interpolate each one in the right place where has been called.
-      -->
-      
-      <!--This HTML part is controller by mainController-->
-      <div ng-controller="mainController">
-        <h1> {{ name }} </h1>
+          <!--
+            Anchor points were used only as shortcuts to go fast to a point in the HTML
+            For example, if you click on "Go to Bookmark", you will immediately go to the Boorkmark paragraph below, without scrolling, an you will also notice that the url address will
+            change and include #bookmark at the end, that piece after the hash (#) is known as
+            FRAGMENT IDENTIFIER.
+
+            Single Page Applications developers, discovered that we can actually have anchor points
+            that are not really linked to any point in the HTML, but if you click them, it changes
+            the url (the fragment identifier) anyways without throwing an error.
+            (click on the "Unexistent Anchor". You won't go anywhere, but the identifier will change)
+
+            So they could have different validations on the JavaScript side, basing its validations
+            on what the FRAGMENT IDENTIFIER is (all what is after the # in the url).
+          -->
+          <a href="#bookmark"> Go to Bookmark </a>
+          <br>
+          <a href="#nothing"> Unexistent Anchor </a>
+
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim consectetur orci at venenatis. Integer euismod dui sed iaculis venenatis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris eleifend justo vestibulum vulputate efficitur. Nunc consectetur tortor ac libero maximus accumsan. Curabitur rutrum libero non ante finibus egestas. Quisque condimentum gravida sagittis. Nulla venenatis eget orci eget iaculis.
+          </p>
+
+          <p>
+            Proin vestibulum, dolor non volutpat semper, arcu diam sollicitudin tortor, eget ultrices arcu enim eu nibh. Maecenas tristique diam dui, sit amet sodales turpis dapibus eu. Cras quis dolor ut est tempor mollis a vitae leo. Etiam dignissim blandit sem vel convallis. Fusce imperdiet nec leo sit amet iaculis. Integer molestie at velit id mattis. Donec id euismod metus. Nam tincidunt, arcu at elementum eleifend, ex tellus volutpat est, a rhoncus nibh ex tempus ligula. Donec tristique augue lorem, at convallis purus pulvinar condimentum. Donec vel sollicitudin metus. Sed vitae dolor neque. Aliquam eu luctus leo. Nunc eget orci eu ante gravida hendrerit id eget nisl. Curabitur eget augue ut neque semper vulputate. Donec odio erat, venenatis sit amet enim pretium, suscipit convallis magna. Praesent nunc eros, varius et ultrices sit amet, imperdiet non nisl.
+          </p>
+
+          <p>
+            Nullam condimentum turpis sit amet ante pellentesque dictum. Curabitur sem purus, congue id lacinia sed, vestibulum nec risus. Suspendisse id blandit augue, a finibus eros. Integer a metus quis sem gravida cursus feugiat sit amet orci. Sed pharetra mattis arcu in congue. Donec commodo ex eros, quis suscipit ligula dignissim vitae. Nunc at felis quis mauris congue tristique quis ut metus. In consectetur venenatis justo ac molestie. Vivamus consectetur ultricies lorem, sit amet condimentum nulla posuere eu. Ut accumsan, neque nec varius vestibulum, arcu neque imperdiet augue, eget consequat lacus nisi laoreet justo.
+          </p>
+
+          <p>
+            Nullam ut arcu a odio tempus venenatis sit amet et leo. Proin elementum eros velit, nec tincidunt risus dictum a. Cras euismod pellentesque ultricies. Nullam malesuada metus ut euismod sollicitudin. Aenean viverra dui vitae mauris commodo malesuada. Praesent vehicula urna vel pharetra semper. Pellentesque commodo ultrices felis, vitae aliquet ipsum scelerisque nec. Integer vitae mi orci. Aliquam commodo tempor tempus. Curabitur iaculis pellentesque urna, ut pretium erat scelerisque a. Maecenas vel quam sagittis, pharetra neque ut, efficitur metus. Morbi at augue sit amet enim venenatis consequat. Morbi nec erat sem.
+          </p>
+
+          <p>
+            <a id="bookmark"> <strong> This is the bookmark </strong> </a>
+            Suspendisse a urna nec velit commodo tincidunt. Praesent volutpat velit neque, et laoreet odio sodales a. Nulla laoreet cursus enim quis tristique. Praesent posuere ullamcorper velit. Duis sollicitudin molestie mi sed sodales. Nullam consectetur eleifend libero, in pharetra velit finibus eu. Curabitur dolor arcu, bibendum ut augue sit amet, lobortis imperdiet tortor. Phasellus sollicitudin euismod velit auctor feugiat. Interdum et malesuada fames ac ante ipsum primis in faucibus. Vivamus a sem nibh. Phasellus lacus arcu, ornare a lorem in, accumsan condimentum velit. Etiam fermentum quam nisi, vel fringilla augue eleifend vitae. Aenean eget magna cursus lorem ornare pulvinar non ac quam. Ut ultricies, arcu at placerat tempor, elit metus imperdiet urna, ut fringilla elit sem hendrerit ex. Pellentesque congue egestas erat vitae accumsan.
+          </p>
+
+        </div>
       </div>
-
-      <!--This HTML part is controller by secondController-->
-      <div ng-controller="secondController">
-        <h1> {{ name }} </h1>
-      </div>
-
     </div>
 
     <script src="/bower_components/jquery/dist/jquery.js"></script>
