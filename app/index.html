@@ -20,7 +20,7 @@
       <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"> Common Directives</a>
+            <a class="navbar-brand" href="/"> The XMLHTTPRequest Object and $http </a>
           </div>
 
           <ul class="nav navbar-nav navbar-right">
@@ -39,41 +39,6 @@
             <input type="text" ng-model="account"/>
           </div>
           
-          <!--
-            BUILT-IN DIRECTIVE: ng-if: Can contain any true/false validation.
-            If validation is not met, this piece of HTML is not renderer in the DOM.
-            Here, we are validating if account.length is equal to our 'characters' variable (5)
-          -->
-          <div class="alert alert-danger" ng-if="account.length !== characters"> Must be 5 characters long! (Validation with ng-if) </div>
-
-
-          <!--
-            BUILT-IN DIRECTIVE: ng-show: Can contain any true/false validation.
-            Pretty similar with ng-if, but this time, if validation is not met, this piece of HTML
-            will be present in the HTML, but with "display:none !important"
-            Here, we are validating if account.length is equal to our 'characters' variable (5)
-          -->
-          <div class="alert alert-danger" ng-show="account.length !== characters"> Must be 5 characters long! (validation with ng-show)</div>
-
-          <!--
-            BUILT-IN DIRECTIVE: ng-hide: Can contain any true/false validation.
-            Exactly the same as ng-show, but inverse. This time if the validation is not met,
-            the piece of HTML will be visible, if it's true, will be hidden.
-            Here, we are validating if account.length is equal to our 'characters' variable (5)
-            Notice that this time is saying "hide when lenght is EQUAL to 5"
-          -->
-          <div class="alert alert-danger" ng-hide="account.length === characters"> Must be 5 characters long! (validation with ng-hide) </div>
-
-          <!--
-            BUILT-IN DIRECTIVE: ng-class: Add a class (or a different) depending on a validation.
-            Let's suppose we want to use a different bootstrap class, depending on different
-            situations.
-            Yellow: if it's less than 5 characters.
-            Green: If it's equal to 5 characters.
-            Red: If is more than 5 characters.
-            We could do that easily with ng-class, check it out:
-            (ng-class receives an object {} with the names of the classes as properties)
-          -->
           <div class="alert" ng-class="{'alert-warning': account.length < characters, 'alert-success': account.length === characters, 'alert-danger': account.length > characters }"> 
             <!--
               And we can have directives inside of other directives, so let's also show a
@@ -97,43 +62,14 @@
             <li ng-repeat="rule in rules">{{rule.rulename}}</li>
           </ul>
 
-          <!--
-            BUILT-IN DIRECTIVE: ng-click: Triggers a function defined by us in the controller, as
-            soon as the element is clicked.
-          -->
-          <input type="button" value="Click me!" ng-click="myFunction()"/>
+          <h3>List loaded using $http instead of the native XMLHttpRequest</h3>
+          <ul>
+            <li ng-repeat="rule in rulesB">{{rule.rulename}}</li>
+          </ul>
 
-          <!--
-            BUILT-IN DIRECTIVE: ng-mouseover: Triggers a function defined by us in the controller, as
-            soon as we pass the mouse over the element.
-          -->
-          <h2 ng-mouseover="myFunction()" > Put the mouse over here </h2>
+          Add rule: <input type="text" ng-model="newRule"/>
+          <a href="#" class="btn btn-default" ng-click="addRule()">Add</a>
 
-          <!--
-            BUILT-IN DIRECTIVE: ng-keydown: Triggers a function defined by us in the controller, as
-            soon as the value in the element, changes.
-          -->
-          <input type="text" placeholder="ng-keydown test" ng-keydown="myFunction()" />
-
-          <!--
-            BUILT-IN DIRECTIVE: ng-keypress: Triggers a function defined by us in the controller, as
-            soon as we press a key in the input that contains the ng-keypress. 
-          -->
-          <input type="text" placeholder="ng-keypress test" ng-keypress="myFunction()"/>
-
-          <!--
-            BUILT-IN DIRECTIVE: ng-change: Triggers a function defined by us in the controller, as
-            soon as the value of the element with ng-change, changes.
-            (ng-change receives a model, to compare if there are changes.)
-          -->
-          <input type="text" placeholder="ng-change test" ng-model="account" ng-change="myFunction()"/>
-
-          <hr/>
-
-          <!--
-            BUILT-IN DIRECTIVE: ng-cloak: Sometimes, if you have a slow internet connection or a slow computer, you may see the interpolation expressions (in this case {{account}} ), instead of the value stored in $scope.account.
-            To avoid that, AngularJS had introduced ng-cloak, so you wont see that interpolation but only the correct values when they are ready. 
-          -->
           <h1 ng-cloak > twitter.com/{{account}} </h1>
         </div>
       </div>

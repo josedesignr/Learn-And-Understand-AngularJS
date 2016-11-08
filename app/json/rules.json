@@ -1,0 +1,6 @@
+[
+	{ "rulename": "Must be 5 characters long" },
+	{ "rulename": "Must be unique" },
+	{ "rulename": "Must be fancy" },
+	{ "rulename": "Any other rule" }
+]
