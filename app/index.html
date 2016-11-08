@@ -30,49 +30,25 @@
       </nav>
     </header>
 
-    <div class="container" ng-controller="mainController">
-      <div class="row">
-        <div class="col-md-12">
-          
-          <div>
-            <label>What is your Twitter account?</label>
-            <input type="text" ng-model="account"/>
-          </div>
-          
-          <div class="alert" ng-class="{'alert-warning': account.length < characters, 'alert-success': account.length === characters, 'alert-danger': account.length > characters }"> 
-            <!--
-              And we can have directives inside of other directives, so let's also show a
-              different message in each one of these cases, using the ng-show that we saw above
-            -->
-            <div ng-show="account.length < characters"> Less than 5 characters. (ng-class)</div>
-            <div ng-show="account.length === characters"> Great! It's 5 characters. (ng-class) </div>
-            <div ng-show="account.length > characters"> More than 5 characters. (ng-class) </div>
+    <div class="container">
 
-          </div>
-
-          <!--
-            BUILT-IN DIRECTIVE: ng-repeat: I can iterate over an array, and create a list of <li>
-            by only putting one <li> here, all of them will be created by the repeat.
-            ng-repeat receives a name (usually the singular word of the array name) and an array name.
-            For example, if our array name in the JavaScript is shoes, we would put:
-            ng-repeat="shoe in shoes", it could also be "a in shoes", but it's easier to understand in the first way, because is one, of all the array items.
-            After that, we can just put by interpolation the value that we want.
-          -->
-          <ul>
-            <li ng-repeat="rule in rules">{{rule.rulename}}</li>
-          </ul>
-
-          <h3>List loaded using $http instead of the native XMLHttpRequest</h3>
-          <ul>
-            <li ng-repeat="rule in rulesB">{{rule.rulename}}</li>
-          </ul>
-
-          Add rule: <input type="text" ng-model="newRule"/>
-          <a href="#" class="btn btn-default" ng-click="addRule()">Add</a>
-
-          <h1 ng-cloak > twitter.com/{{account}} </h1>
-        </div>
+      <!--
+      Even if both controllers have the same variable: 'name', Angular is smart enough
+      to know that they belongs to different controllers.
+      So, it look for 'name' in mainController, and also look for 'name' in secondController
+      and interpolate each one in the right place where has been called.
+      -->
+      
+      <!--This HTML part is controller by mainController-->
+      <div ng-controller="mainController">
+        <h1> {{ name }} </h1>
       </div>
+
+      <!--This HTML part is controller by secondController-->
+      <div ng-controller="secondController">
+        <h1> {{ name }} </h1>
+      </div>
+
     </div>
 
     <script src="/bower_components/jquery/dist/jquery.js"></script>
