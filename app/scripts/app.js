@@ -1,74 +1,78 @@
-var app = angular.module('myApp', []);
+/* ROUTING, TEMPLATES AND CONTROLLERS */
 
-app.controller('mainController', ['$scope', function($scope) {
+/*
+	The way AngularJS constructs Single Page Applications involves several
+	fundamental concepts and we are going to discuss those now.
+*/
 
+var app = angular.module('myApp', ['ngRoute']);
+
+app.controller('mainController', ['$scope', '$location', '$log', function($scope, $location, $log) {
+
+	//--Remember what we did in last lesson to get the hash? The Angular service $location does the same.
+	$log.info($location.path());
+
+	/* 
+		This console.log is just to let you know that Angular already has a way to get the hash
+		and since the hash is a key part of its structure, it also has a module that allows us
+		to define which view should be shown depending on the route (fragment identifier).
+
+		This module is ngRoute, which doesn't come in the AngularJS core, so we need to download it
+		from angularjs.org, import it in the HTML (see there), and inject it in the main module ('myApp')
+	*/
 }]);
 
+//-- Once the ngRoute is injected in the 'myApp' module. HOW DOES IT WORK?
 
+//--First, we have to set a config, which receives a function, which receives a $routeProvider.
+app.config(function($routeProvider) {
 
-/* SINGLE PAGE APPS AND THE HASH */
+	//--$routeProvider watches the hash, in order to search matches with the routes created by us.
+	$routeProvider
 
-/*
-	In thi lesson we are going to understand the KEY
-	of how Single Page Applications works.
+	//--The when() method has the route that we create, and an object with certain properties.
+	.when('/', {
 
-	And we are going to explain it from the JavaScript and HTML bases,
-	so, we don't need AngularJS in this lesson.
-	Forget about the AngularJS code lines above.
-*/
+		/*  One of the properties is templateUrl, which in other words is saying:
+			When my website is www.myapp.com/#/ show the HTML that is stored in views/home.html
+		*/
+		templateUrl: 'views/home.html',
+		
+		/*  Another property is controller, that sets which controller binds to the view
+			that we defined above (home.html)
+			This is the same as putting an ng-controller at the very first tag of home.html
+			But it's a best practice to set the controller here.
+		*/
+		controller: 'mainController'
+	})
+	//-- We can create as many routes as we want, setting a view and a controller for each one.
+	//-- For example, when my route is www.myapp.com/#/second, is going to show second.html
+	.when('/second', {
+		templateUrl: 'views/second.html',
+		controller: 'secondController'
+	})
 
-//-- THIS IS PURE JAVASCRIPT
+	/*  This works very well but... What happen if we don't know exactly which route would it be?
 
-/*
-	We saw that JavaScript has an Event Loop and some events (click, keypress, and so on).
-	Well, there is another one which is 'hashchange', that watches when the fragment identifier*
-	changes while you are on the page.
+		For example, what if the hash is not going to be a constant, but it's going to depend
+		on the logged user?
+		www.myapp.com/#/alvarojose when Alvaro Jose is logs in,
+		but www.myapp.com/#/johndoe when Jhon Doe logs in.
 
-	**The fragment identifier explanation is in the index.html.
-*/
-
-//--Once the event identifier changes, this function get triggered.
-window.addEventListener('hashchange', function(){
-
-	/* Inside of this function we can do whatever we want,
-		we can also validate if the Fragment Identifier matches with certain route that we specify.
-		Go ahead and run the page, and change manually the url to match these routes, and you
-		will see the logs of each different route.
-		Or you can also type anything (#whatever), and you will see just "Hash Changed!"
+		To resolve that, we can also define routes with parameters. Let's see how it works.
 	*/
-	if (window.location.hash === "#/bookmark/1"){
-		console.log("Page 1 is cool!");
-	}
-	if (window.location.hash === "#blah"){
-		console.log("Showing page 2");
-	}
-	if (window.location.hash === "#thisisafragment/identifier"){
-		console.log("This is page 3");
-	}
-	console.log("Hash Changed!");
+	//--By putting : and a parameter name (in this case username), we say that username is variable.
+	.when('/second/:username', {
+		templateUrl: 'views/second.html',
+		controller: 'secondController'
+	})
 });
 
+//--Now let's create the secondController, and since we have a route with parameters, we must inject $routeParams
+app.controller('secondController', ['$scope', '$routeParams', function($scope, $routeParams){
 
-/*
-	This concept, is the fundamental key to single page applications.
-	A single page application is one where you only officially download once,
-	the browser does a complete HTTP request for the HTML, only once.
+	//-- Here we're extracting the parameter from the url, and giving that value to a variable in the $scope.
+	//-- The || 'none' is optional, it means that if there's no parameter, but only www.myapp.com/second then set the variable to 'none'
+	$scope.username = $routeParams.username || 'none';
 
-	So when you look at the URL, it's just one page.
-	And you use asynchronous request that is AJAX, or having the browser go out 
-	and get values behind the scenes, and specify where it should go, using the
-	fragment identifier, using the hash.
-
-	And then, inside the JavaScript, you would go out and get the particular
-	contents that are associated to this what is essentially a fake URL.
-
-	This allows for some really cool and very powerful applications that behave
-	in a way that feel more like a native desktop application.
-
-	Rather than a bunch of refresh, refresh, refresh and the page blinks, we can
-	use JavaScript and start going out and getting new values and making decitions
-	based on the hash, and pretending like each hash value corresponds to a page.
-
-	This is very powerful, an AngularJS uses this basis concept to wrap up and
-	make ready for you, everything you need in order to build single page applications.
-*/
+}]);
