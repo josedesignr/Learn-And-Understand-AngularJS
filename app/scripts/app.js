@@ -1,21 +1,7 @@
-/* SINGLETONS AND SERVICES */
-
-/*
-	When you hear the term Angular Services, you immediately hear the term "Singletons".
-	SINGLETON:
-	The one and ONLY copy of an object, it's a pattern in object oriented programming, and it means
-	that I only have one of that object, ever.
-
-	For example: We might in the code have a person object and then, elsewhere in the code
-	instanciate or create copies of that person object (like a Jose object, Steve object, etc).
-
-	BUT, with a singleton, there is ONLY ONE.
-	whenever you ask for the object, you are never getting a copy, you are getting the one and only object.
-
-	AngularJS services are implemented as singletons. Let's prove that:
-*/
+/* CREATING A SERVICE */
 
 var app = angular.module('myApp', ['ngRoute']);
+
 
 //-- CONFIG ROUTES
 app.config(function($routeProvider) {
@@ -28,40 +14,103 @@ app.config(function($routeProvider) {
 			templateUrl: 'views/second.html',
 			controller: 'secondController'
 		})
-		/* This is something I forgot to include in last lesson
-			the otherwise() method, is used by the routeProvier
-			when none of the previous routes matches.
-			Normally, the otherwise, goes to the '/' or home. 
-		*/
 		.otherwise('/');
 });
 
-//--CONTROLLERS
-app.controller('mainController', ['$scope', '$log', function($scope, $log) {
-
-	//-- If we add a property to the $log service.
-	$log.myProperty = "Property from Main Controller";
-
-	$log.log($log);
-}]);
-
-
-app.controller('secondController', ['$scope', '$log', function($scope, $log){
-
-	//--And we add another property to the $log service from this controller...
-	$log.anotherProperty = "Property from Second Controller";
-
-	$log.log($log);
-}]);
-
 /*
-	We can enter to both pages and check the logs, you will see that both properties are added to the same $log object.
+	Let's create our own custom service, using the utilities that AngularJS provides.
+	So, the syntax for creating our own service, that is a Singleton object and will
+	contain properties and functions or methods. It's pretty simple.
 
-	But, wait a minute...
-	If all the Angular Services are singletons and all the created properties goes to the same singleton.
-
-	HOW IS POSIBLE THAT $scope WORKS IN THE WAY IT DOES?
-	Well, that is an exception. $scope is the only Angular module that is not a Singleton,
-	actually the Singleton is $rootScope and the different $scope across the app, are childs.
+	It's going to be attached to 'myApp', does not pollute the Global Namespace that
+	it's inside that app module. And we just do:
 */
 
+app.service('nameService', [function(){
+
+	
+	var self = this;
+	self.name = "John Doe";
+	
+	/*  Since 'this' only tracks the scope of each function, putting 'this'
+		inside a var, clarifies that if I ask for 'self' inside the internal
+		function, I am reffering to 'this' of the parent function.
+	*/
+	self.namelength = function(){
+		return self.name.length;
+	};
+	
+}]);
+
+/*  WHAT WOULD I DO WITH A SERVICE?
+	This is where you are taking advantage of single page applications.
+	Remember that normally when you are dealing with JavaScript, if was
+	to move from page to page, I would lose my JavaScript variables.
+
+	But because I am inside a Single Page Application, even though I am
+	navigating from a page to page; I am still inside the same JavaScript
+	memory space. So that means I can share content across pages, as well
+	as use the services to encapsulate functionality that I use across
+	different controllers.
+
+	Let's take a quick look at how would use this:
+*/
+
+
+//--CONTROLLERS
+
+//-- Remember to inject the nameService as we have done before with Angular built-in services.
+app.controller('mainController', ['$scope', 'nameService', function($scope, nameService) {
+
+	/*  By doing that, we can now access to the properties in nameService
+		and pass them to local controller $scope variables.
+	*/
+	$scope.name = nameService.name;
+
+	//--Why do I need this $watch?
+	/*
+		if I just want to read value of nameService, it is not needed.
+		But if I want to change values of nameService, I need this watch because
+		changing the name model, is only going to change the value of $scope.name HERE.
+
+		And if I go to another view and come back again here, the controller restarts,
+		goes again to nameService and gives that value to $scope.name
+
+		If we want that any change made in this model, affects the service too, we need to
+		add a watch that modifies the name in nameService, with every change in $scope.name.
+
+		BUT REMEMBER:
+		If you modifies values or properties in nameService, since it's a singleton, you're
+		going to change it wherever that value is called, even if it's in other controller.
+
+		This is a powerful way to share data and services across different views (pages).
+	*/
+	$scope.$watch('name', function(){
+		nameService.name = $scope.name;
+	});
+
+}]);
+
+
+app.controller('secondController', ['$scope', 'nameService', function($scope, nameService){
+
+	/* Look, this is another controller but it can also access the property name
+		in the nameService because it is injected here too.
+	*/
+	$scope.name = nameService.name;
+
+	$scope.$watch('name', function(){
+		nameService.name = $scope.name;
+	});
+
+}]);
+
+
+/* Another thing, when you're learning and reading about AngularJS, you'll hear about
+	more than just services, you'll also hear about factories and providers.
+	But we are not to cover factories and providers, because they are basically the 
+	same thing, they are very similar enough that if you know how to use a service, you
+	can learn how to use a factory very easily.
+	Provider, you'll rarely have to use it.
+	For most purposes, learning to use a service will be just fine.
+*/
