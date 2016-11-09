@@ -1,7 +1,13 @@
-/* CREATING A SERVICE */
+/* CREATING A DIRECTIVE */
+
+/*
+	We are now going to learn how to create our own directives in AngularJS.
+
+	What's that usefeul for?
+	(Read explanation at index.html)
+*/
 
 var app = angular.module('myApp', ['ngRoute']);
-
 
 //-- CONFIG ROUTES
 app.config(function($routeProvider) {
@@ -17,100 +23,57 @@ app.config(function($routeProvider) {
 		.otherwise('/');
 });
 
-/*
-	Let's create our own custom service, using the utilities that AngularJS provides.
-	So, the syntax for creating our own service, that is a Singleton object and will
-	contain properties and functions or methods. It's pretty simple.
-
-	It's going to be attached to 'myApp', does not pollute the Global Namespace that
-	it's inside that app module. And we just do:
-*/
-
-app.service('nameService', [function(){
-
-	
-	var self = this;
-	self.name = "John Doe";
-	
-	/*  Since 'this' only tracks the scope of each function, putting 'this'
-		inside a var, clarifies that if I ask for 'self' inside the internal
-		function, I am reffering to 'this' of the parent function.
-	*/
-	self.namelength = function(){
-		return self.name.length;
-	};
-	
-}]);
-
-/*  WHAT WOULD I DO WITH A SERVICE?
-	This is where you are taking advantage of single page applications.
-	Remember that normally when you are dealing with JavaScript, if was
-	to move from page to page, I would lose my JavaScript variables.
-
-	But because I am inside a Single Page Application, even though I am
-	navigating from a page to page; I am still inside the same JavaScript
-	memory space. So that means I can share content across pages, as well
-	as use the services to encapsulate functionality that I use across
-	different controllers.
-
-	Let's take a quick look at how would use this:
-*/
-
 
 //--CONTROLLERS
+app.controller('mainController', ['$scope', function($scope) {
+	//--Not needed for this lesson.
+}]);
 
-//-- Remember to inject the nameService as we have done before with Angular built-in services.
-app.controller('mainController', ['$scope', 'nameService', function($scope, nameService) {
-
-	/*  By doing that, we can now access to the properties in nameService
-		and pass them to local controller $scope variables.
-	*/
-	$scope.name = nameService.name;
-
-	//--Why do I need this $watch?
-	/*
-		if I just want to read value of nameService, it is not needed.
-		But if I want to change values of nameService, I need this watch because
-		changing the name model, is only going to change the value of $scope.name HERE.
-
-		And if I go to another view and come back again here, the controller restarts,
-		goes again to nameService and gives that value to $scope.name
-
-		If we want that any change made in this model, affects the service too, we need to
-		add a watch that modifies the name in nameService, with every change in $scope.name.
-
-		BUT REMEMBER:
-		If you modifies values or properties in nameService, since it's a singleton, you're
-		going to change it wherever that value is called, even if it's in other controller.
-
-		This is a powerful way to share data and services across different views (pages).
-	*/
-	$scope.$watch('name', function(){
-		nameService.name = $scope.name;
-	});
-
+app.controller('secondController', ['$scope', function($scope){
+ //--Not needed for this lesson.
 }]);
 
 
-app.controller('secondController', ['$scope', 'nameService', function($scope, nameService){
+//--DIRECTIVES: A directive receives a name and a function which returns an object with certain properties:
+app.directive('searchResult', function(){
 
-	/* Look, this is another controller but it can also access the property name
-		in the nameService because it is injected here too.
-	*/
-	$scope.name = nameService.name;
+	return {
 
-	$scope.$watch('name', function(){
-		nameService.name = $scope.name;
-	});
+		//--The template property is the HTML that gets outputted when the directive is used.
+		/*
+		template: '<a href="#" class="list-group-item"><h4 class="list-group-item-heading"> Doe, Jane </h4><p class="list-group-item-text"> 26st Roadway. FL, 33166 </p></a>',
+		*/
 
-}]);
+		/* Sometimes, the template property can became into a pain in the neck, because it's not
+			very fancy to paste a full HTML component into a single string line. 
+			For that reason, it could be nicer to have a directives folder, with the HTML on a separate file.
+			The templateUrl property works in the same way as we learned in the routing lesson.
+			We just give the location where the file is stored.
+		*/ 
+		templateUrl: 'directives/search-result.html',
+		
+		/* The restrict property can receive four different letters (or mix of those letters):
+			A: Means the directive is accepted into the HTML as Attribute -> <div search-result ></div>
+			E: Means the directive is accepted into the HTML as Element -> <search-result></search-result>
+			C: Means the directive is accepted into the HTML as Class -> <div class="search-result"></div>
+			M: Means the directive is accepted into the HTML as coMment -> <!-- directive: search-result-->
 
+			We can restrict the directive to only accept one, several, or all of them: 'A' 'AE' 'AECM'
+			By default it is 'AE', so, if this is what we want, we don't need the restrict property.
+		*/
+		restrict: 'AECM',
 
-/* Another thing, when you're learning and reading about AngularJS, you'll hear about
-	more than just services, you'll also hear about factories and providers.
-	But we are not to cover factories and providers, because they are basically the 
-	same thing, they are very similar enough that if you know how to use a service, you
-	can learn how to use a factory very easily.
-	Provider, you'll rarely have to use it.
-	For most purposes, learning to use a service will be just fine.
+		/* The replace property, by default, is false. If I set it to true, it means
+			that the directive tags will be replaced for the HTML in the template. */
+		replace: true
+	}
+});
+
+/*
+	PD: Notice, in the HTML the directive is placed as search-result, but here it's searchResult.
+		This happens because in JavaScript we cannot define a variable name with dash (-),
+		because JavaScript understand it as a minus (search minus result), and throws an error.
+		You don't have to worry about this, just take care of define the name exactly the same
+		but in camelCase (searchResult), and AngularJS will be smart enough to understand that
+		search-result in the HTML is linked to the directive searchResult.
 */

@@ -20,7 +20,7 @@
       <nav class="navbar navbar-default">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="/"> Creating a Service </a>
+            <a class="navbar-brand" href="/"> Creating a Directive </a>
           </div>
 
           <ul class="nav navbar-nav navbar-right">
@@ -31,12 +31,58 @@
       </nav>
     </header>
 
+    <!-- CONTAINER WITHOUT DIRECTIVES -->
     <div class="container">
-      <!--
-        This directive is extremely important, because this is saying Angular to put
-        the views (depending on the one that matches the route), right here in this div.
-      -->
-      <div ng-view ></div>
+
+      <label> Search </label>
+      <input type="text" value="Doe"/>
+
+      <h3> Search Results </h3>
+      
+      <div class="list-group">
+
+      <!-- WHY CUSTOM DIRECTIVES ARE USEFUL?
+      Imagine that we have a list results, with a bunch of different people,
+      and for each one we have something like this:-->
+        <a href="#" class="list-group-item">
+          <h4 class="list-group-item-heading"> Doe, John </h4>
+          <p class="list-group-item-text"> 555 Main St. NY, 11111 </p>
+        </a>
+
+       <!--And repeat it again for another result-->
+        <a href="#" class="list-group-item">
+          <h4 class="list-group-item-heading"> Doe, Jane </h4>
+          <p class="list-group-item-text"> 26st Roadway. FL, 33166 </p>
+        </a>
+
+       <!--
+       And what if we have 50 people?
+       It'd be nice to have this piece of HTML somewhere else, and just fill it with the right data.
+       Well that's posible by making our own directives.
+       -->  
+      </div>
+    </div>
+
+    <!-- CONTAINER WITH DIRECTIVES -->
+    <div class="container">
+      <label> Search </label>
+      <input type="text" value="Doe"/>
+
+      <h3> Search Results </h3>
+      
+      <div class="list-group">
+
+        <!-- 
+          These are the four ways to place directives in HTML
+          (check the directive in app.js to know more about them)
+        -->
+        <search-result></search-result>
+        <div search-result></div>
+        <div class="search-result"></div>
+        <!-- directive: search-result -->
+
+        
+      </div>
     </div>
 
     <script src="/bower_components/jquery/dist/jquery.js"></script>
