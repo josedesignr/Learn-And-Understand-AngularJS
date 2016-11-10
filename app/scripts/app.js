@@ -1,11 +1,4 @@
-/* CREATING A DIRECTIVE */
-
-/*
-	We are now going to learn how to create our own directives in AngularJS.
-
-	What's that usefeul for?
-	(Read explanation at index.html)
-*/
+/* @, =, AND OTHER OBTUSE SYMBOLS */
 
 var app = angular.module('myApp', ['ngRoute']);
 
@@ -24,56 +17,78 @@ app.config(function($routeProvider) {
 });
 
 
-//--CONTROLLERS
-app.controller('mainController', ['$scope', function($scope) {
-	//--Not needed for this lesson.
-}]);
+/*
+	This is very important, it could be a bit confusing but I'll try  to explain in detail.
 
-app.controller('secondController', ['$scope', function($scope){
- //--Not needed for this lesson.
-}]);
+	As we saw in last lesson, a Directive is a piece of HTML that we put in an independant file,
+	in order to be reused in several places, no matter controllers or in which view you place it.
+
+	This is a great advantage, but it also can be dangerous because, since the Directive is a
+	piece o HTML that is placed at any place that we want to put it, you perfectly can put the
+	same directive in two different views (each with a different controller), and it's valid.
+
+	The problem comes when, for example, you put the same directive in 2 different views,
+	like, putting <search-result></search-result> in home.html ('/') and second.html ('/second')
+	Those two views have their own controller ($scope), and, since the directive (a piece oh HTML)
+	is inside the view, it can also access the controller of the view where the directive is included.
+
+	That can be great, but if the directive is going to do things to the items and elements on the
+	scope, it's going to set changes in the parent controller. (the view where the directive is placed)
+	And this, perhaps, can cause an unexpected and unwished behavior.
+
+	AngularJS provide us a way to avoid this, by giving to the directive its own scope, so it will
+	not mess with the parent scope where the directive is placed. Let's see:
+*/
 
 
-//--DIRECTIVES: A directive receives a name and a function which returns an object with certain properties:
+//--DIRECTIVES:
 app.directive('searchResult', function(){
 
 	return {
-
-		//--The template property is the HTML that gets outputted when the directive is used.
-		/*
-		template: '<a href="#" class="list-group-item"><h4 class="list-group-item-heading"> Doe, Jane </h4><p class="list-group-item-text"> 26st Roadway. FL, 33166 </p></a>',
-		*/
-
-		/* Sometimes, the template property can became into a pain in the neck, because it's not
-			very fancy to paste a full HTML component into a single string line. 
-			For that reason, it could be nicer to have a directives folder, with the HTML on a separate file.
-			The templateUrl property works in the same way as we learned in the routing lesson.
-			We just give the location where the file is stored.
-		*/ 
 		templateUrl: 'directives/search-result.html',
-		
-		/* The restrict property can receive four different letters (or mix of those letters):
-			A: Means the directive is accepted into the HTML as Attribute -> <div search-result ></div>
-			E: Means the directive is accepted into the HTML as Element -> <search-result></search-result>
-			C: Means the directive is accepted into the HTML as Class -> <div class="search-result"></div>
-			M: Means the directive is accepted into the HTML as coMment -> <!-- directive: search-result-->
-
-			We can restrict the directive to only accept one, several, or all of them: 'A' 'AE' 'AECM'
-			By default it is 'AE', so, if this is what we want, we don't need the restrict property.
-		*/
 		restrict: 'AECM',
+		replace: true,
+		
+		/*  By setting the scope property here into the directive, it will look only in this
+			isolated scope and not to other scopes.
+			So, it doesn't matter where is placed, it won't take the parent's scope, but this one.  
+		*/
+		scope: {
+			/*  If we need to access properties from the parent scope, we can set an attribute in 
+				the HTML where the directive is placed. (see home.html or second.html)
+				The same name(s) of attribute(s), must be here in this scope (in camelCase).
 
-		/* The replace property, by default, is false. If I set it to true, it means
-			that the directive tags will be replaced for the HTML in the template. */
-		replace: true
+				The '@' symbol means that we are going to receive just text from the parent scope,
+				this is information that flows in only one way.
+			*/
+			personName: "@",
+			personAddress: "@"
+		}	
 	}
 });
 
+
+//--CONTROLLERS
+app.controller('mainController', ['$scope', function($scope) {
+	
+	$scope.person = {
+		name: 'John Doe',
+		address: '555 Main St. Ney York, NY 11111'
+	}
+
+}]);
+
+app.controller('secondController', ['$scope', function($scope){
+
+	$scope.person = {
+		name: 'Jane Doe',
+		address: '26th Roadway. Miami, FL 33166'
+	}
+
+}]);
+
 /*
-	PD: Notice, in the HTML the directive is placed as search-result, but here it's searchResult.
-		This happens because in JavaScript we cannot define a variable name with dash (-),
-		because JavaScript understand it as a minus (search minus result), and throws an error.
-		You don't have to worry about this, just take care of define the name exactly the same
-		but in camelCase (searchResult), and AngularJS will be smart enough to understand that
-		search-result in the HTML is linked to the directive searchResult.
+	Notice that mainController and secondController, both have the person property, but with 
+	different values, and depending on what view you have selected, it shows the right values.
 */
+
