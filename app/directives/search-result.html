@@ -1,4 +1,12 @@
 <a href="#" class="list-group-item">
 	<h4 class="list-group-item-heading"> {{personObject.name}} </h4>
-	<p class="list-group-item-text"> {{personObject.address}} </p>
+
+	<!--
+		This part is a bit confusing, pay attention:
+		We are going to interpolate the function (with the name that we gave in the isolated scope),
+		and, as argument, we are going to pass an object which must have the same name of the
+		argument that we defined in the place where we placed the directive, (val)
+		and as value of that property, the object that is required to get the address joined.
+	-->
+	<p class="list-group-item-text"> {{ formattedAddress( {val: personObject} ) }} </p>
 </a>

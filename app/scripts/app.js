@@ -1,4 +1,4 @@
-/* @, =, AND OTHER OBTUSE SYMBOLS: PART 2 */
+/* @, =, AND OTHER OBTUSE SYMBOLS: PART 3 */
 
 var app = angular.module('myApp', ['ngRoute']);
 
@@ -54,16 +54,14 @@ app.directive('searchResult', function(){
 			So, it doesn't matter where is placed, it won't take the parent's scope, but this one.  
 		*/
 		scope: {
-			/*  If we need to get more than just text, but perhaps a whole object, with abilty
-				to change data, then we need another symbol to indicate this to AngularJS: =
-				The = symbol means that we are not just going to pass text, but a whole object.
-				We need to create an attribute in the HTML, in the place where the directive is
-				being placed, and repeat the same attribute name here, but in camelCase.
-				Remember that = allows two way binding, so if you cnange any value of the object
-				received, it is also going to change in the parent scope.
-				(Go home.html or second.html to see how is this attribute created.)
+			//-- The = symbol is explained in the previous lesson.
+			personObject: "=",
+			/*  What if we had a function on the scope of the controller, that is defining the template
+				that contains the directive, and what if we want to have access to it.
+				Well, if we want to access a function that is in the parent scope, we need to use 
+				the & symbol.
 			*/
-			personObject: "="
+			formattedAddress: "&"
 		}	
 	}
 });
@@ -74,8 +72,16 @@ app.controller('mainController', ['$scope', function($scope) {
 	
 	$scope.person = {
 		name: 'John Doe',
-		address: '555 Main St. Ney York, NY 11111'
-	}
+		address: '555 Main St',
+		city: 'Ney York',
+		state: 'NY',
+		zip: '11111'
+	};
+
+	//--Let's suppose that we want to access this function in the isolated scope of the directive 
+	$scope.joinAddress = function(person){
+		return person.address + ', ' + person.city + '. ' + person.state + ' ' + person.zip;
+	};
 
 }]);
 
@@ -83,13 +89,22 @@ app.controller('secondController', ['$scope', function($scope){
 
 	$scope.person = {
 		name: 'Jane Doe',
-		address: '26th Roadway. Miami, FL 33166'
-	}
+		address: '26th Roadway',
+		city: 'Miami',
+		state: 'FL',
+		zip: '33166'
+	};
+
+	$scope.joinAddress = function(person){
+		return person.address + ', ' + person.city + '. ' + person.state + ' ' + person.zip;
+	};
 
 }]);
 
 /*
 	Notice that mainController and secondController, both have the person property, but with 
 	different values, and depending on what view you have selected, it shows the right values.
+
+	The function joinAddress is just the same in both.
 */
 

@@ -3,7 +3,10 @@
 
 <h3> Search Results </h3>
 <div class="list-group">
-  <!--Notice that this time we are not interpolation, because we are not getting text
-    but a whole object, so we just pass the object name, as value of our created attribute-->
-  <search-result person-object="person"></search-result>
+  <!--
+    We can just create any attribute name to the function that we want to call from the parent
+    scope, just taking care of putting the same name in the isolated scope (in camelCase), and
+    inside, invoke the function, with any argument name. (in this case, val).
+  -->
+  <search-result person-object="person" formatted-address="joinAddress(val)"></search-result>
 </div>
