@@ -1,3 +1,5 @@
 <h1> This is Second </h1>
 <hr/>
-<div search-result person-name="{{person.name}}" person-address="{{person.address}}></div>
+  <!--Notice that this time we are not interpolation, because we are not getting text
+    but a whole object, so we just pass the object name, as value of our created attribute-->
+<div search-result person-object="person"></div>

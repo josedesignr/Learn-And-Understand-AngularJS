@@ -1,4 +1,4 @@
-/* @, =, AND OTHER OBTUSE SYMBOLS */
+/* @, =, AND OTHER OBTUSE SYMBOLS: PART 2 */
 
 var app = angular.module('myApp', ['ngRoute']);
 
@@ -54,15 +54,16 @@ app.directive('searchResult', function(){
 			So, it doesn't matter where is placed, it won't take the parent's scope, but this one.  
 		*/
 		scope: {
-			/*  If we need to access properties from the parent scope, we can set an attribute in 
-				the HTML where the directive is placed. (see home.html or second.html)
-				The same name(s) of attribute(s), must be here in this scope (in camelCase).
-
-				The '@' symbol means that we are going to receive just text from the parent scope,
-				this is information that flows in only one way.
+			/*  If we need to get more than just text, but perhaps a whole object, with abilty
+				to change data, then we need another symbol to indicate this to AngularJS: =
+				The = symbol means that we are not just going to pass text, but a whole object.
+				We need to create an attribute in the HTML, in the place where the directive is
+				being placed, and repeat the same attribute name here, but in camelCase.
+				Remember that = allows two way binding, so if you cnange any value of the object
+				received, it is also going to change in the parent scope.
+				(Go home.html or second.html to see how is this attribute created.)
 			*/
-			personName: "@",
-			personAddress: "@"
+			personObject: "="
 		}	
 	}
 });
