@@ -1,4 +1,4 @@
-/* UNDERSTANDING 'LINK' */
+/* UNDERSTANDING TRANSCLUSION */
 
 var app = angular.module('myApp', ['ngRoute']);
 
@@ -50,6 +50,33 @@ app.service('peopleService', function(){
 });
 
 
+/*  When we talk about custom directives, there is another term
+	that you will see, it's called Transclusion.
+
+	It's actually another word that sounds really complex but it's
+	actually just a big word that's used in computer science for a
+	simple concept.
+
+	TRANSCLUSION: Include one document inside another.
+
+	So, why do we talk about transclusion when we are talking about
+	AngularJS directives?
+
+	What if I want to include some information within the directive
+	tags? for example:
+
+		<search-result> Some information here </search-result>
+
+	If you try it, just like that, you will see that nothing
+	happens, the sentence "Some information here" is just ignored.
+
+	This is because AngularJS replaces the <search-result> tags, for
+	what is in the html directive (search-result.html, in this case.)
+
+	If we want to show that information, we need to use transclusion.
+	This is how it works:
+*/
+
 //--DIRECTIVES:
 app.directive('searchResult', function(){
 
@@ -61,32 +88,9 @@ app.directive('searchResult', function(){
 			personObject: "=",
 			formattedAddress: "&"
 		},
-		/* In last lesson we learned about the 'compile' and linkers as 'pre' and 'post',
-			but honestly speaking, 'compile' is something that is almost never used.
-			It is more common to use 'post' to modify an specific use of directive.
-
-			In order to do that, without creating an empty 'compile' with the 'post'
-			property inside; what it's better is to use link.
-
-			Link is a property that does the same as 'post', without needing to create
-			extra elements.
-
-			Just define link, as a function that receives a scope, elements and attributes,
-			in this case we have an array with 3 persons, and we are placing the directive
-			<search-result> on each iteration.
-
-			But let's say when the person is Jane Doe, we don't want that to have any class.
-			With the link property we can validate if the person name is "Jane Doe", and if
-			it matches, remove any 'class' attribute. Run this code and check this out.
-		*/
-		link: function(scope, elements, attrs){
-			console.log("Linking...");
-
-			if (scope.personObject.name === 'Jane Doe') {
-				elements.removeAttr('class');
-			}
-			console.log(elements);
-		}		
+		//-- It is required to enable the transclude property.
+		//-- See the next step in home.html and/or second.html
+		transclude: true		
 	}
 });
 

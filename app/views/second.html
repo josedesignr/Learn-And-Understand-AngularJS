@@ -1,7 +1,13 @@
 <h1> This is Second </h1>
 <hr/>
 <div class="list-group">
-	<!--If we want to iterate over an array to apply our directive and show different names,
-        we can use the ng-repeat that we saw previously-->
-	<div search-result ng-repeat="person in people" person-object="person" formatted-address="joinAddress(val)"></div>	
+	<div search-result ng-repeat="person in people" person-object="person" formatted-address="joinAddress(val)">
+		<!--
+	        I can put any information here, as content of this directive exclusively,
+	        but, in order to have this information visible, I need to go to the
+	        templateUrl and put a <ng-transclude> tag in the place where this sentence goes.
+	        Go to search-result.html to see it.
+      	-->
+		This is second and I want some information here.
+	</div>	
 </div>
