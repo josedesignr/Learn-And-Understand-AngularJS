@@ -3,10 +3,11 @@
 
 <h3> Search Results </h3>
 <div class="list-group">
-  <!--
-    We can just create any attribute name to the function that we want to call from the parent
-    scope, just taking care of putting the same name in the isolated scope (in camelCase), and
-    inside, invoke the function, with any argument name. (in this case, val).
-  -->
-  <search-result person-object="person" formatted-address="joinAddress(val)"></search-result>
+  
+  <div class="list-group">
+    <!--If we want to iterate over an array to apply our directive and show different names,
+        we can use the ng-repeat that we saw previously-->
+    <search-result ng-repeat="person in people" person-object="person" formatted-address="joinAddress(val)"></search-result>
+  </div>
+  
 </div>
